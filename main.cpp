@@ -31,16 +31,13 @@ void train(Chatbot &megabot, vector<Intent*> &intents)
 
 		switch (option)
 		{
-		case '1': // Add intent
+		case '1':
 			try
 			{
 				string name;
 				cout << "Intent name: ";
 				getline(cin, name);
 				Intent *newIntent = new Intent(name);
-				// Añadimos el nuevo Intent al vector "intents" pasado como parámetro
-				// De esta manera, aunque se destruya el "Chatbot" las intenciones seguirán existiendo en este vector
-				// Esto se hace porque existe una relación de "agregación" entre Intent y Chatbot
 				intents.push_back(newIntent);
 				megabot.addIntent(newIntent);
 			} catch (Error e)
@@ -48,21 +45,21 @@ void train(Chatbot &megabot, vector<Intent*> &intents)
 				Util::error(e);
 			}
 			break;
-		case '2': // Delete intent
+		case '2':
 			megabot.deleteIntent();
 			break;
-		case '3': // Add example
+		case '3':
 			megabot.addExample();
 			break;
-		case '4': // Delete example
+		case '4':
 			megabot.deleteExample();
 			break;
-		case '5': // Add response
+		case '5':
 			megabot.addResponse();
 			break;
-		case 'b': // Back to main menu
+		case 'b':
 			break;
-		default: // Error
+		default:
 			Util::error(ERR_OPTION);
 			break;
 		}
@@ -81,8 +78,6 @@ void showMainMenu()
 
 int main(int argc, char *argv[])
 {
-	// Hay una relación de agregación entre "Chatbot" e "Intent"
-	// Por esta razón definimos un vector "intents" aquí, para que las intenciones no se destruyan si se destruye el chatbot
 	vector<Intent*> intents;
 	Chatbot megabot;
 
@@ -97,21 +92,21 @@ int main(int argc, char *argv[])
 
 		switch (option)
 		{
-		case '1': // Train
+		case '1':
 			train(megabot, intents);
 			break;
-		case '2': // Test
+		case '2':
 			megabot.Test();
 			break;
-		case '3': // Report
+		case '3':
 			cout << megabot << endl;
 			break;
-		case '4': // Configure
+		case '4':
 			megabot.Configure();
 			break;
-		case 'q': // Quit
+		case 'q':
 			break;
-		default: // Error
+		default:
 			Util::error(ERR_OPTION);
 		}
 	} while (option != 'q');
